@@ -35,7 +35,7 @@ void solve(){
             }
         }
     }
-    cout<<str<<endl;
+    cout<<str<<" "<<endl;
 }
 int main() {
     ios_base::sync_with_stdio(false);
