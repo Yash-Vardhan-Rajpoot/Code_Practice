@@ -1,41 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
-int helper(vector<int>&arr,int n,int x){
-    int count=0;
-    vector<int> pref(n);
-    pref[0]=arr[0];
-    for(int i=1;i<n;i++) pref[i]=pref[i-1]+arr[i];
-    for(int i=0;i<n;i++){
-        int sum=pref[i];
-        vector<int> check;
-        while(sum>0){
-            check.push_back(sum%10);
-            sum/=10;
-        }
-        if(check[0]==x and check[check.size()-1]==x) count+=1;
-    }
-    int temp=pref[0];
-    for(int i=1;i<n;i++){
-        for(int j=i;j<n;j++){
-            int sum=pref[j]-temp;
-            vector<int> check;
-            while(sum>0){
-                check.push_back(sum%10);
-                sum/=10;
-            }
-            if(check[0]==x and check[check.size()-1]==x) count+=1;
-        }
-        temp=pref[i];
-    }
-    return count;
+typedef string str;
+typedef vector<int> v;
+int helper(v &arr){
+    int p1p2p3=arr[0]+arr[1]+arr[2];
+    if(p1p2p3%2!=0) return -1;
+    if(arr[0]+arr[1]<=arr[2]) return arr[0]+arr[1];
+    else return (arr[0]+arr[1]+arr[2])/2;
+
 }
 int main(){
-    ios_base::sync_with_stdio(false);
+    ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int n,x;
-    cin>>n>>x;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++) cin>>arr[i];
-    cout<<helper(arr,n,x)<<endl;
+    int t;
+    cin>>t;
+    while(t--){
+        int p1,p2,p3;
+        cin>>p1>>p2>>p3;
+        v arr{p1,p2,p3};
+        cout<<helper(arr)<<endl;
+    }
     return 0;
 }
