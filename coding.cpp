@@ -1,24 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef string str;
-typedef vector<int> v;
-int helper(v &arr){
-    int p1p2p3=arr[0]+arr[1]+arr[2];
-    if(p1p2p3%2!=0) return -1;
-    if(arr[0]+arr[1]<=arr[2]) return arr[0]+arr[1];
-    else return (arr[0]+arr[1]+arr[2])/2;
-
+string helper(string& str){
+    int n=str.size();
+    set<char> _set;
+    for(int i=0;i<n;i++) _set.insert(str[i]);
+    char ch1,ch2;
+    for(auto &it:_set){
+        for(int i=0;i<n;i++){
+            if(it==str[i]) break;
+            if(str[i]>it){
+                ch1=it;
+                ch2=str[i];
+                break;
+            }
+        }
+    }
+    string ans="";
+    for(int i=0;i<n;i++){
+        if(str[i]==ch2) ans+=ch1;
+        else if(str[i]==ch1) ans+=ch2;
+        else ans+=str[i];
+    }
+    return ans;
 }
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t;
-    cin>>t;
-    while(t--){
-        int p1,p2,p3;
-        cin>>p1>>p2>>p3;
-        v arr{p1,p2,p3};
-        cout<<helper(arr)<<endl;
-    }
+    string str;
+    cin>>str;
+    cout<<helper(str)<<endl;
     return 0;
 }
