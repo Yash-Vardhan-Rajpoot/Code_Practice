@@ -1,28 +1,26 @@
 #include<bits/stdc++.h>
 using namespace std;
-string helper(int n,int k,string& str){
-    unordered_map<char,int> mp;
-    for(char &ch:str) mp[ch]++;
-    int count=0;
-    for(auto &it:mp){
-        int freq=it.second;
-        if(freq%2!=0) count+=1;
-    }
-    int compodd=count-1;
-    if(compodd>k) return "NO";
-    return "YES";
+vector<int> helper(int a,int b,int c){
+    int a1=0,b1=0,c1=0;
+    if((a&1)==(b&1)) c1=1;
+    if((a&1)==(c&1)) b1=1;
+    if((b&1)==(c&1)) a1=1;
+    return {a1,b1,c1};
+
 }
+    
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t;
     cin>>t;
     while(t--){
-        int n,k;
-        cin>>n>>k;
-        string str;
-        cin>>str;
-        cout<<helper(n,k,str)<<endl;    
+        int a,b,c;
+        cin>>a>>b>>c;
+        vector<int> ans;
+        ans=helper(a,b,c);
+        for(int i=0;i<ans.size();i++) cout<<ans[i]<<" ";
+        cout<<endl;
     }
     return 0;
 }
