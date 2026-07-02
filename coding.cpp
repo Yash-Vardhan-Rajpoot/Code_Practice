@@ -1,78 +1,42 @@
 #include<bits/stdc++.h>
 using namespace std;
-pair<int,int> helper(int n,int h1,int m1,vector<pair<int,int>>&t){
-    bool check=false;
-    for(auto &p:t){
-        int h2=p.first;
-        int m2=p.second;
-        if(h1==h2 and m1==m2){
-            check=true;
+string helper(string &str){
+    unordered_map<char,int> mp;
+    for(auto &ch:str) mp[ch]++;
+    bool check=true;
+    int s=0,e=str.size()-1;
+    while(s<e){
+        if(str[s]==str[e]){
+            s++;
+            e--;
+        }else{
+            check=false;
             break;
         }
     }
-    if(check) return {0,0};
+    if(!check) return str;
     else{
-        vector<pair<int,int>> p;
-        for(auto &pa:t){
-            int h2=pa.first;
-            int m2=pa.second;
-            if(h1<h2){
-                if(m2>=m1) p.push_back({h2-h1,m2-m1});
-                else p.push_back({h2-h1-1,m2-m1+60});
-            }
-            else if(h1==h2){
-                if(m2>m1) p.push_back({h2-h1,m2-m1});
-                else{
-                    int addh=0,addm=0;
-                    if(m2==0) addh=24-h1;
-                    else{
-                        addh=23-h1;
-                        addm=60-m1;
-                    }
-                    addm+=m2;
-                    if(addm>=60){
-                        addh+=1;
-                        addm%=60;
-                    }
-                    p.push_back({addh+h2,addm});
-                }
-            }
-            else{
-                int addh=0,addm=0;
-                if(h2!=0 and m2==0) addh=24-h1;
-                else{
-                    addh=23-h1;
-                    addm=60-m1;
-                }
-                addm+=m2;
-                if(addm>=60){
-                    addh+=1;
-                    addm%=60;
-                }
-                p.push_back({addh+h2,addm});
+        string ans="";
+        if(mp.size()==1) return "-1";
+        else{
+            for(auto &i:mp){
+                char ch=i.first;
+                int freq=i.second;
+                for(int i=0;i<freq;i++) ans+=ch;
             }
         }
-        sort(begin(p),end(p));
-        return {p[0].first,p[0].second};
+        return ans;
     }
 }
-    
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t;
     cin>>t;
     while(t--){
-        int n,h,m;
-        cin>>n>>h>>m;
-        vector<pair<int,int>>t;
-        for(int i=0;i<n;i++){
-            int h1,m1;
-            cin>>h1>>m1;
-            t.push_back({h1,m1});
-        }
-        pair<int,int> ans=helper(n,h,m,t);
-        cout<<ans.first<<" "<<ans.second<<endl;
+        string str;
+        cin>>str;
+        cout<<helper(str)<<endl;
     }
     return 0;
 }
